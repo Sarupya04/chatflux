@@ -1,3 +1,4 @@
+import  ReactMarkdown from "react-markdown";
 import user from "./assets/user.png";
 import robot from "./assets/robot.png";
 
@@ -31,8 +32,10 @@ function ChatMessage({ message, sender }) {
                 <img src={robot} className="chat-message-profile" />
             )}
 
-            <div className="chat-message-text">{message}</div>
-            
+            <div className="chat-message-text">
+                <ReactMarkdown>{message}</ReactMarkdown>
+            </div>
+
             {sender === 'user' && (
                 <img src={user} className="chat-message-profile" />
             )}

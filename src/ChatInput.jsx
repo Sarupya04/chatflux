@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Chatbot } from 'supersimpledev';
 
 
 function ChatInput({ chatMessages, setChatMessages }) {
@@ -9,7 +8,7 @@ function ChatInput({ chatMessages, setChatMessages }) {
         setInputText(event.target.value);
     }
 
-    function sendMessage(){
+    async function sendMessage(){
         const newChatMessages = [
                 ...chatMessages,
                 {
@@ -20,13 +19,22 @@ function ChatInput({ chatMessages, setChatMessages }) {
             ];
 
         setChatMessages(newChatMessages);
+        setInputText("");
 
-        const response = Chatbot.getResponse(inputText);
+        const res = await fetch("http://localhost:5000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: inputText })
+        });
+
+        const data = await res.json();
 
         setChatMessages([
             ...newChatMessages,
             {
-                message: response,
+                message: data.reply,
                 sender: 'robot',
                 id: crypto.randomUUID()
             }
