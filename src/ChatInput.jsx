@@ -25,7 +25,7 @@ function ChatInput({ chatMessages, setChatMessages }) {
     setInputText("");
 
     try {
-      // 🔹 Convert messages into LLM format
+      // Convert messages into LLM format
       const conversation = updatedMessages.map((msg) => ({
         role: msg.sender === "user" ? "user" : "assistant",
         content: msg.message,
@@ -47,7 +47,12 @@ function ChatInput({ chatMessages, setChatMessages }) {
           id: crypto.randomUUID(),
         },
       ]);
-    } catch (err) {
+    }
+
+    catch (err) {
+
+      console.log("Error sending message:", err);
+
       setChatMessages([
         ...updatedMessages,
         {
@@ -56,7 +61,8 @@ function ChatInput({ chatMessages, setChatMessages }) {
           id: crypto.randomUUID(),
         },
       ]);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   }
